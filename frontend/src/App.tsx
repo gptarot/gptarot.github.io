@@ -1,9 +1,24 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
+import { fetchData } from './test';
 
 function App() {
   const [count, setCount] = useState(0)
+  const [data, setData] = useState({
+    result: ''
+  });
+
+  useEffect(() => {
+    const handleFetchData = async () => {
+      const res = await fetchData();
+
+      if (res) {
+        setData(res);
+      }
+    }
+    handleFetchData();
+  }, [])
 
   return (
     <>
@@ -15,6 +30,7 @@ function App() {
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
+      <p>{data?.result}</p>
       <h1>Vite + React</h1>
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
