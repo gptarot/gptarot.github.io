@@ -1,53 +1,33 @@
-import { useEffect, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import { fetchData } from './test';
+import { useState } from "react"
+import Input from "./components/Input"
+import getPrediction from "./services/tarotService"
 
 function App() {
-  const [count, setCount] = useState(0)
-  const [data, setData] = useState({
-    result: ''
-  });
+  const [name, setName] = useState("")
+  const [dob, setDob] = useState("")
+  const [prediction, setPrediction] = useState()
 
-  useEffect(() => {
-    const handleFetchData = async () => {
-      const res = await fetchData();
+  const handleSubmit = async (ev) => {
+    ev.preventDefault();
 
-      if (res) {
-        setData(res);
-      }
+    const res = await getPrediction();
+
+    if (res) {
+      setPrediction(res);
     }
-    handleFetchData();
-  }, [])
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <p>{data?.result}</p>
-      <p>This is my voice one day learning Eng Breaking</p>
-      <p>This is my voice three days learning Eng Breaking</p>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>Hello World</p>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-      <p className='text-red-600'>Hello World</p>
-    </>
+    <div className="h-screen flex flex-col items-center justify-center bg-background bg-center">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+        <Input id="name" label="Your name" onChange={(ev) => setName(ev.target.value)} value={name}></Input>
+        <Input id="dob" label="Your Day of Birth" onChange={(ev) => setDob(ev.target.value)} value={dob}></Input>
+        <div className="flex items-center justify-center">
+          <button className="bg-white px-4 py-2 rounded-md">Submit</button>
+        </div>
+      </form>
+      {prediction && <div className="bg-white p-4 rounded-md mt-10">{prediction.result}</div>}
+    </div>
   )
 }
 
