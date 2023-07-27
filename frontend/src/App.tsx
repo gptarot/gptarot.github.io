@@ -10,7 +10,6 @@ function App() {
     result: null,
   })
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const handleSubmit = async (ev: any) => {
     console.log(ev)
     ev.preventDefault();
@@ -29,24 +28,23 @@ function App() {
           id="name" 
           label="Your name" 
           onChange={
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             (ev: any) => setName(ev.target.value)
           } 
-          value={name}></Input>
+          value={name} 
+        />
         <Input 
           id="dob" 
           label="Your Day of Birth" 
           onChange={
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             (ev: any) => setDob(ev.target.value)} 
-          value={dob}></Input>
+          value={dob}/>
         <Input 
           id="question" 
           label="Your Question" 
           onChange={
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             (ev: any) => setQuestion(ev.target.value)} 
-          value={question}></Input>
+          value={question}
+        />
         <div className="flex items-center justify-center">
           <button className="bg-white px-4 py-2 rounded-md">Submit</button>
         </div>
