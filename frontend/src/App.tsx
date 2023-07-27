@@ -32,6 +32,7 @@ function App() {
       </div>
       <p>{data?.result}</p>
       <p>This is my voice one day learning Eng Breaking</p>
+      <p>This is my voice three days learning Eng Breaking</p>
       <h1>Vite + React</h1>
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
