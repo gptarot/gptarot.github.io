@@ -5,6 +5,7 @@ import getPrediction from "./services/tarotService"
 function App() {
   const [name, setName] = useState("")
   const [dob, setDob] = useState("")
+  const [question, setQuestion] = useState("")
   const [prediction, setPrediction] = useState({
     result: null,
   })
@@ -39,6 +40,13 @@ function App() {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             (ev: any) => setDob(ev.target.value)} 
           value={dob}></Input>
+        <Input 
+          id="question" 
+          label="Your Question" 
+          onChange={
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            (ev: any) => setQuestion(ev.target.value)} 
+          value={question}></Input>
         <div className="flex items-center justify-center">
           <button className="bg-white px-4 py-2 rounded-md">Submit</button>
         </div>
