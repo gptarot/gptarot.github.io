@@ -1,22 +1,15 @@
-import React from "react";
+import React from 'react';
 
 interface InputProps {
-    id: string;
-    onChange: any;
-    value: string;
-    label: string;
-    type?: string;
-    error?: string;
+  id: string;
+  onChange: any;
+  value: string;
+  label: string;
+  type?: string;
+  error?: string;
 }
 
-const Input: React.FC<InputProps> = ({
-    id,
-    onChange,
-    value,
-    label,
-    type,
-    error
-}) => {
+const Input: React.FC<InputProps> = ({ id, onChange, value, label, type, error }) => {
   return (
     <div className="relative">
       <input
@@ -69,6 +62,6 @@ const Input: React.FC<InputProps> = ({
       {error && <p className="text-warn text-xs mt-2">{error}</p>}
     </div>
   );
-}
+};
 
 export default Input;
