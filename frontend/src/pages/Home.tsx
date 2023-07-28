@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import Input from './components/Input';
-import getPrediction from './services/tarotService';
+import getPrediction from '../services/tarotService';
+import Input from '../components/Input';
 
-function App() {
+const Home = () => {
   const [name, setName] = useState('');
   const [dob, setDob] = useState('');
   const [question, setQuestion] = useState('');
@@ -11,7 +11,6 @@ function App() {
   });
 
   const handleSubmit = async (ev: any) => {
-    console.log(ev);
     ev.preventDefault();
 
     const res = await getPrediction();
@@ -39,6 +38,6 @@ function App() {
       {prediction.result && <div className="bg-white p-4 rounded-md mt-10">{prediction.result}</div>}
     </div>
   );
-}
+};
 
-export default App;
+export default Home;
