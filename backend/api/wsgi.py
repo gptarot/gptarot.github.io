@@ -1,4 +1,5 @@
-from api.index import app
+from api.index import app, os
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port="7496", debug=True)
+    railway_port = os.getenv("PORT", default = "5000")
+    app.run(host="0.0.0.0", port=railway_port, debug=True)
