@@ -1,0 +1,17 @@
+{
+    "name": "Bùi Quang Thắng",
+    "dob": "05/06/2003",
+    "question": "Mùa hè này tôi có việc thực tập hay không",
+    "past-card": {
+        "name" : "Chariot" ,
+        "isUpRight" : false
+    },
+    "present-card": {
+        "name" : "The Fool" ,
+        "isUpRight" : true
+    },
+    "future-card": {
+        "name" : "The Magician" ,
+        "isUpRight" : true
+    }
+}
