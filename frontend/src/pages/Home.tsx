@@ -13,10 +13,10 @@ const Home = () => {
   const handleSubmit = async (ev: any) => {
     ev.preventDefault();
 
-    const res = await getPrediction();
+    const response = await getPrediction();
 
-    if (res) {
-      setPrediction(res);
+    if (response) {
+      setPrediction(response);
     }
   };
 
