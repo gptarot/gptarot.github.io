@@ -1,8 +1,8 @@
 # Run: gunicorn -c gunicorn_config.py app:app
 
-import os, multiprocessing
+import os
 
-workers = multiprocessing.cpu_count() * 2 + 1
+workers = 5
 max_requests = 1000
 timeout = 120
 
