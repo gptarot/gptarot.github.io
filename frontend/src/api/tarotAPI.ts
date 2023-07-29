@@ -1,5 +1,5 @@
-import { AxiosResponse } from 'axios';
 import axios from './axios';
+import { AxiosResponse } from 'axios';
 import { Prediction } from '../types';
 
 const getPrediction = async (
