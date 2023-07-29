@@ -1,18 +1,30 @@
 import { useState } from 'react';
 import getPrediction from '../services/tarotService';
 import Input from '../components/Input';
-import { Prediction } from '../types';
+import { Cards, Prediction } from '../types';
 
-const Home = () => {
+const Home: React.FC = (): JSX.Element => {
   const [name, setName] = useState<string>('');
   const [dob, setDob] = useState<string>('');
   const [question, setQuestion] = useState<string>('');
+  const [cards, setCards] = useState<Cards>({
+    pastCard: '',
+    presentCard: '',
+    futureCard: '',
+  });
   const [prediction, setPrediction] = useState<Prediction | null>(null);
 
   const handleSubmit = async (ev: React.FormEvent<HTMLFormElement>) => {
     ev.preventDefault();
 
-    const response: Prediction = await getPrediction();
+    const response: Prediction | undefined = await getPrediction(
+      name,
+      dob,
+      question,
+      cards.pastCard,
+      cards.presentCard,
+      cards.futureCard,
+    );
 
     if (response) {
       setPrediction(response);
@@ -40,6 +52,26 @@ const Home = () => {
           onChange={(ev: React.ChangeEvent<HTMLInputElement>) => setQuestion(ev.target.value)}
           value={question}
         />
+        <div className="flex gap-4">
+          <Input
+            id="pastCard"
+            label="Past Card"
+            onChange={(ev: React.ChangeEvent<HTMLInputElement>) => setCards({ ...cards, pastCard: ev.target.value })}
+            value={cards.pastCard}
+          />
+          <Input
+            id="presentCard"
+            label="Present Card"
+            onChange={(ev: React.ChangeEvent<HTMLInputElement>) => setCards({ ...cards, presentCard: ev.target.value })}
+            value={cards.presentCard}
+          />
+          <Input
+            id="futureCard"
+            label="Future Card"
+            onChange={(ev: React.ChangeEvent<HTMLInputElement>) => setCards({ ...cards, futureCard: ev.target.value })}
+            value={cards.futureCard}
+          />
+        </div>
         <div className="flex items-center justify-center">
           <button className="bg-white px-4 py-2 rounded-md">Submit</button>
         </div>
