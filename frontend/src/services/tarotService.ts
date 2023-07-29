@@ -19,15 +19,15 @@ const getPrediction = async (
         question,
         'past-card': {
           name: pastCard,
-          isUpright: true,
+          isUpRight: true,
         },
         'present-card': {
           name: presentCard,
-          isUpright: true,
+          isUpRight: true,
         },
         'future-card': {
           name: futureCard,
-          isUpright: true,
+          isUpRight: true,
         },
       },
       {
