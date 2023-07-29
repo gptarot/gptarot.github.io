@@ -1,7 +1,8 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 import werkzeug, os, time, requests
-from api.model import generatePrompt, openai
+# from api.model import generatePrompt, openai
+from api.alt_model import generatePrompt
 
 def get_available_api_key():
     api_keys = [
@@ -25,11 +26,13 @@ def get_available_api_key():
 def create_app():
     app = Flask(__name__)
     
+    """
     available_api_key = get_available_api_key()
     if available_api_key:
         openai.api_key = available_api_key
     else:
         raise Exception("No available API key")
+    """
     
     CORS(app)
     
