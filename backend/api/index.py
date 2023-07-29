@@ -26,11 +26,14 @@ def get_available_api_key():
 
 def create_app():
     app = Flask(__name__)
+    """
     available_api_key = get_available_api_key()
     if available_api_key:
         openai.api_key = available_api_key
     else:
         raise Exception("No available API key")
+    """
+    openai.api_key = os.getenv("OPENAI_API_KEY_1")
     CORS(app)
     
     @app.errorhandler(werkzeug.exceptions.BadRequest)
