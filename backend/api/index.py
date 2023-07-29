@@ -4,13 +4,13 @@ import werkzeug
 from api.model import generatePrompt, openai, os, time
 import requests
 
-api_keys = [
-    os.getenv("OPENAI_API_KEY_1"),
-    os.getenv("OPENAI_API_KEY_2"),
-    os.getenv("OPENAI_API_KEY_3"),
-]
 
 def get_available_api_key():
+    api_keys = [
+        os.getenv("OPENAI_API_KEY_1"),
+        os.getenv("OPENAI_API_KEY_2"),
+        os.getenv("OPENAI_API_KEY_3"),
+    ]
     for api_key in api_keys:
         headers = {
             "Authorization": f"Bearer {api_key}"
