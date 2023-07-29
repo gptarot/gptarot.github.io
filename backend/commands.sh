@@ -5,7 +5,7 @@ if [ -f ".env" ]; then
     # Export the environment variables from the .env file
     export $(xargs < .env)
 else
-    echo "WARNING: .env file not found. Proceeding without it. Please make sure to set the environment variables manually."
+    echo "Proceeding without .env. Please make sure to set the environment variables manually on Railway."
 fi
 
 # Run the gunicorn server
