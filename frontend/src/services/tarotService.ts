@@ -10,30 +10,27 @@ const getPrediction = async (
   presentCard: string,
   futureCard: string,
 ): Promise<Prediction | undefined> => {
+  const request = {
+    name,
+    dob,
+    question,
+    'past-card': {
+      name: pastCard,
+      isUpRight: true,
+    },
+    'present-card': {
+      name: presentCard,
+      isUpRight: true,
+    },
+    'future-card': {
+      name: futureCard,
+      isUpRight: true,
+    },
+  };
   try {
-    const response: AxiosResponse<Prediction> = await axios.post(
-      '/api',
-      {
-        name,
-        dob,
-        question,
-        'past-card': {
-          name: pastCard,
-          isUpRight: true,
-        },
-        'present-card': {
-          name: presentCard,
-          isUpRight: true,
-        },
-        'future-card': {
-          name: futureCard,
-          isUpRight: true,
-        },
-      },
-      {
-        headers: { 'Content-Type': 'application/json' },
-      },
-    );
+    const response: AxiosResponse<Prediction> = await axios.post('/api', request, {
+      headers: { 'Content-Type': 'application/json' },
+    });
     return response.data;
   } catch (error) {
     console.log(error);
