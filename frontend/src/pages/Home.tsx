@@ -2,6 +2,7 @@ import { useState } from 'react';
 import getPrediction from '../services/tarotService';
 import Input from '../components/Input';
 import { Cards, Prediction } from '../types';
+import { Link } from 'react-router-dom';
 
 const Home: React.FC = (): JSX.Element => {
   const [name, setName] = useState<string>('');
@@ -77,6 +78,7 @@ const Home: React.FC = (): JSX.Element => {
         </div>
       </form>
       {prediction && <div className="bg-white p-4 rounded-md mt-10">{prediction.data}</div>}
+      <Link to="/random">Navigate</Link>
     </div>
   );
 };
