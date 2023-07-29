@@ -47,7 +47,7 @@ def create_app():
     @app.route('/api', methods=['POST'])
     async def api():
         try:
-            data = await request.json
+            data = request.json
 
             if not isinstance(data, dict):
                 return jsonify({'error': 'Invalid data type'})
