@@ -2,7 +2,7 @@ import poe, os
 
 async def GPTarot_request(prompt:str) -> str:
     client = poe.Client(os.environ["POE_TOKEN"])
-    for result in client.send_message("capybara", prompt):
+    for result in client.send_message("chinchilla", prompt): # chinchilla is the name of the engine ChatGPT3.5-Turbo
         pass
     return result["text"]
 
