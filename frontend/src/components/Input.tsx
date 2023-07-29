@@ -1,15 +1,7 @@
 import React from 'react';
+import { InputProps } from '../types';
 
-interface InputProps {
-  id: string;
-  onChange: (ev: React.ChangeEvent<HTMLInputElement>) => void;
-  value: string;
-  label: string;
-  type?: string;
-  error?: string;
-}
-
-const Input: React.FC<InputProps> = ({ id, onChange, value, label, type, error }) => {
+const Input: React.FC<InputProps> = ({ id, onChange, value, label, type, error }): JSX.Element => {
   return (
     <div className="relative">
       <input
