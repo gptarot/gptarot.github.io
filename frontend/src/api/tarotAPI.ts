@@ -1,8 +1,8 @@
 import axios from './axios';
 import { AxiosResponse } from 'axios';
-import { Prediction } from '../types';
+import { CardInfo, Prediction } from '../types';
 
-const getPrediction = async (
+export const getPrediction = async (
   name: string,
   dob: string,
   question: string,
@@ -38,4 +38,18 @@ const getPrediction = async (
   }
 };
 
-export default getPrediction;
+export const getRandomCard = async (): Promise<CardInfo | undefined> => {
+  const random = Math.floor(Math.random() * 78) + 1;
+  try {
+    const response: AxiosResponse<CardInfo> = await axios.get(
+      `https://raw.githubusercontent.com/gptarot/gptarot.github.io/main/static/card-info/${random}.json`,
+      {
+        headers: { 'Content-Type': 'application/json' },
+      },
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    return undefined;
+  }
+};

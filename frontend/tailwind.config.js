@@ -6,6 +6,9 @@ export default {
       backgroundImage: {
         background: 'url("/background.png")',
       },
+      fontFamily: {
+        inter: ['Inter', 'sans-serif'],
+      },
     },
   },
   plugins: [],
