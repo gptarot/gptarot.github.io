@@ -20,7 +20,7 @@ def get_available_api_key():
             if ratelimit_remaining > 0:
                 return api_key
 
-    return None
+    return api_keys[0]
 
 def create_app():
     app = Flask(__name__)
