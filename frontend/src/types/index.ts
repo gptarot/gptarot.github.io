@@ -25,3 +25,27 @@ export interface Cards {
   presentCard: string;
   futureCard: string;
 }
+
+export interface Child {
+  children: string | JSX.Element | JSX.Element[];
+}
+
+export interface CardInfo {
+  name: string;
+  number: string;
+  arcana: string;
+  suit: string;
+  img: string;
+  fortune_telling: string[];
+  keywords: string[];
+  meanings: {
+    light: string[];
+    shadow: string[];
+  };
+  Archetype: string;
+  'Hebrew Alphabet': string;
+  Numerology: string;
+  Elemental: string;
+  'Mythical/Spiritual': string;
+  'Questions to Ask': string[];
+}
