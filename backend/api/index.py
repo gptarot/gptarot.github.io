@@ -50,14 +50,14 @@ def create_app():
             data = request.json
 
             if not isinstance(data, dict):
-                return jsonify({'error': 'Invalid data type'})
+                return jsonify({'error': 'Invalid data type'}), 500
 
             start = time.time()
             result = await generatePrompt(data)
             return jsonify({'data': result, 'processing_time': time.time() - start, 'code': 200})
 
         except Exception as e:
-            return jsonify({'error': str(e)})
+            return jsonify({'error': str(e)}), 403
 
 
     return app
