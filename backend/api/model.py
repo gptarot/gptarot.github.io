@@ -1,30 +1,4 @@
-import json
 import openai
-import os
-import shutil
-import time
-
-testing_data = {
-    "name": "Bùi Quang Thắng",
-    "dob": "05/06/2003",
-    "question": "Mùa hè này tôi có việc thực tập hay không",
-    "past-card": {
-        "name" : "Chariot" ,
-        "isUpRight" : False
-    },
-    "present-card": {
-        "name" : "The Fool" ,
-        "isUpRight" : True
-    },
-    "future-card": {
-        "name" : "The Magician" ,
-        "isUpRight" : True
-    }
-}
-
-# Load API key, generate API key in https://beta.openai.com/account/api-keys
-# Then use command echo "OPENAI_API_KEY=<your key>" > .env
-# Then use command export $(xargs < .env) to export the key
 
 async def GPTarot_request(prompt:str) -> str:
     response = openai.ChatCompletion.create(model="gpt-3.5-turbo", messages=[{"role": "user", "content": prompt}])
@@ -38,7 +12,7 @@ def finalCardName(card_dict:dict) -> str:
         card_name += ' (Bài ngược)'
     return card_name
 
-async def generatePrompt(data:dict = testing_data) -> str:
+async def generatePrompt(data:dict) -> str:
     past_card = finalCardName(data['past-card'])
     present_card = finalCardName(data['present-card'])
     future_card = finalCardName(data['future-card'])

@@ -1,9 +1,7 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-import werkzeug
-from api.model import generatePrompt, openai, os, time
-import requests
-
+import werkzeug, os, time, requests
+from api.model import generatePrompt, openai
 
 def get_available_api_key():
     api_keys = [
@@ -15,7 +13,7 @@ def get_available_api_key():
         headers = {
             "Authorization": f"Bearer {api_key}"
         }
-        response = requests.head("https://api.openai.com/v1/usage", headers=headers)
+        response = requests.get("https://api.openai.com/v1/usage", headers=headers)
 
         if "x-ratelimit-remaining" in response.headers:
             ratelimit_remaining = int(response.headers["x-ratelimit-remaining"])
@@ -26,14 +24,13 @@ def get_available_api_key():
 
 def create_app():
     app = Flask(__name__)
-    """
+    
     available_api_key = get_available_api_key()
     if available_api_key:
         openai.api_key = available_api_key
     else:
         raise Exception("No available API key")
-    """
-    openai.api_key = os.getenv("OPENAI_API_KEY_1")
+    
     CORS(app)
     
     @app.errorhandler(werkzeug.exceptions.BadRequest)
