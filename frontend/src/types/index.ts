@@ -1,5 +1,5 @@
 export interface Prediction {
-  result: string;
+  data: string;
 }
 
 export interface PredictionRequest {

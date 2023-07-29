@@ -76,7 +76,7 @@ const Home: React.FC = (): JSX.Element => {
           <button className="bg-white px-4 py-2 rounded-md">Submit</button>
         </div>
       </form>
-      {prediction && <div className="bg-white p-4 rounded-md mt-10">{prediction.result}</div>}
+      {prediction && <div className="bg-white p-4 rounded-md mt-10">{prediction.data}</div>}
     </div>
   );
 };
