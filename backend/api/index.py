@@ -54,7 +54,7 @@ def create_app():
 
             start = time.time()
             result = await generatePrompt(data)
-            return jsonify({'data': result, 'processing_time': time.time() - start, 'code': 200})
+            return jsonify({'data': result, 'processing_time': time.time() - start}), 200
 
         except Exception as e:
             return jsonify({'error': str(e)}), 403
