@@ -38,8 +38,8 @@ export const getPrediction = async (
   }
 };
 
-export const getRandomCard = async (): Promise<CardInfo | undefined> => {
-  const random = Math.floor(Math.random() * 78) + 1;
+export const getRandomCard = async (random: number | null): Promise<CardInfo | undefined> => {
+  if (random === null) return undefined;
   try {
     const response: AxiosResponse<CardInfo> = await axios.get(
       `https://raw.githubusercontent.com/gptarot/gptarot.github.io/main/static/card-info/${random}.json`,
