@@ -1,39 +1,11 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-import werkzeug, os, time, requests
-# from api.model import generatePrompt, openai
-from api.alt_model import generatePrompt
-
-def get_available_api_key():
-    api_keys = [
-        os.getenv("OPENAI_API_KEY_1"),
-        os.getenv("OPENAI_API_KEY_2"),
-        os.getenv("OPENAI_API_KEY_3"),
-    ]
-    for api_key in api_keys:
-        headers = {
-            "Authorization": f"Bearer {api_key}"
-        }
-        response = requests.get("https://api.openai.com/v1/usage", headers=headers)
-
-        if "x-ratelimit-remaining" in response.headers:
-            ratelimit_remaining = int(response.headers["x-ratelimit-remaining"])
-            if ratelimit_remaining > 0:
-                return api_key
-
-    return api_keys[0]
+import werkzeug, time
+from api.model import generatePrompt, poe, os
 
 def create_app():
     app = Flask(__name__)
-    
-    """
-    available_api_key = get_available_api_key()
-    if available_api_key:
-        openai.api_key = available_api_key
-    else:
-        raise Exception("No available API key")
-    """
-    
+    client = poe.Client(os.environ["POE_TOKEN"])
     CORS(app)
     
     @app.errorhandler(werkzeug.exceptions.BadRequest)
@@ -42,7 +14,7 @@ def create_app():
     
     @app.route("/")
     async def home():
-        return jsonify({'result': 'Wrong route, please use /api'})
+        return jsonify({'data': 'Wrong route, please use /api'}), 404
     
     @app.route('/api', methods=['POST'])
     async def api():
@@ -53,12 +25,11 @@ def create_app():
                 return jsonify({'error': 'Invalid data type'}), 500
 
             start = time.time()
-            result = await generatePrompt(data)
+            result = await generatePrompt(client, data)
             return jsonify({'data': result, 'processing_time': time.time() - start}), 200
 
         except Exception as e:
             return jsonify({'error': str(e)}), 403
-
 
     return app
 
