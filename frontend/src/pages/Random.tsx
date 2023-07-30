@@ -8,8 +8,9 @@ const Random: React.FC = (): JSX.Element => {
   const [random, setRandom] = useState<number | null>(null);
 
   const handleRandomCard = async (): Promise<void> => {
-    setRandom(Math.floor(Math.random() * 78) + 1);
-    const response: CardInfo | undefined = await getRandomCard(random);
+    const randomNumber = Math.floor(Math.random() * 78) + 1;
+    setRandom(randomNumber);
+    const response: CardInfo | undefined = await getRandomCard(randomNumber);
 
     if (response) {
       setCardInfo(response);
