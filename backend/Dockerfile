@@ -1,4 +1,4 @@
-FROM python:3.9.13-slim
+FROM python:3.9-slim-buster 
 WORKDIR /home
 COPY . /home/
 RUN pip install --no-cache-dir -r /home/requirements.txt
