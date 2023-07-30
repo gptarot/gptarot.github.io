@@ -50,6 +50,7 @@ def create_app():
         except Exception as e:
             return jsonify({'error': 'Internal Server Error!', 'details' : str(e)}), 500
 
+    # Return the Flask app
     return app
 
 
