@@ -10,4 +10,5 @@ threads = 2
 
 PORT = os.environ.get('PORT', 5000)
 bind = f'0.0.0.0:{PORT}'
-worker_class = 'gevent'
+
+# worker_class = 'gevent'
