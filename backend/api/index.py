@@ -1,11 +1,11 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-import werkzeug, time, poe, os
-from api.model import generatePrompt
+import werkzeug, time, os
+from api.model import generatePrompt, openai
 
 def create_app():
     app = Flask(__name__)
-    client = poe.Client(os.environ["POE_TOKEN"])
+    openai.api_key = os.environ.get('OPENAI_API_KEY')
     CORS(app)
     
     @app.errorhandler(werkzeug.exceptions.BadRequest)
@@ -25,7 +25,7 @@ def create_app():
                 return jsonify({'error': 'Invalid data type'}), 500
 
             start = time.time()
-            result = await generatePrompt(client, data)
+            result = await generatePrompt(data)
             return jsonify({'data': result, 'processing_time': time.time() - start}), 200
 
         except Exception as e:
