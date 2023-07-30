@@ -1,17 +1,31 @@
-import openai
+import openai, poe, os
+
+async def POE_request(prompt:str) -> str:
+    poe_client = poe.Client(os.environ.get('POE_TOKEN'))
+    for chunk in poe_client.send_message("chinchilla", prompt, timeout=120):
+        pass
+    del poe_client
+    return (chunk["text"])
 
 async def GPTarot_request(prompt:str) -> str:
     model_lists = [
         "gpt-3.5-turbo",
         "gpt-3.5-turbo-0301",
-        "gpt-3.5-turbo-0613"
+        "gpt-3.5-turbo-0613",
+        "poe-gpt-3.5-turbo",
     ]
     
     # Switch openAI chat completion model everytime it is invalid
     for model in model_lists:
         try:
-            response = openai.ChatCompletion.create(model=model, messages=[{"role": "user", "content": prompt}])
-            return str(response.choices[0].message.content)
+            if model_lists.index(model) != 3:
+                response = openai.ChatCompletion.create(model=model, messages=[{"role": "user", "content": prompt}])
+                return str(response.choices[0].message.content)
+            
+            elif model_lists.index(model) == 3:
+                response = await POE_request(prompt)
+                return response
+    
         except Exception as e:
             print(e, "\n==> Switching from model {} to model {}".format(model, model_lists[model_lists.index(model) + 1]))
             continue

@@ -1,4 +1,4 @@
-# Run: gunicorn -c gunicorn_config.py app:app
+# Run: gunicorn -c gunicorn_config.py wsgi:app
 
 import os
 
