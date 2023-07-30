@@ -1,15 +1,32 @@
 import openai
 
 async def GPTarot_request(prompt:str) -> str:
-    response = openai.ChatCompletion.create(model="gpt-3.5-turbo", messages=[{"role": "user", "content": prompt}])
-    return str(response.choices[0].message.content)
+    model_lists = [
+        "gpt-3.5-turbo",
+        "gpt-3.5-turbo-0301",
+        "gpt-3.5-turbo-0613"
+    ]
+    
+    # Switch openAI chat completion model everytime it is invalid
+    for model in model_lists:
+        try:
+            response = openai.ChatCompletion.create(model=model, messages=[{"role": "user", "content": prompt}])
+            return str(response.choices[0].message.content)
+        except Exception as e:
+            print(e, "\n==> Switching from model {} to model {}".format(model, model_lists[model_lists.index(model) + 1]))
+            continue
+        
+    # If all models are invalid, raise an exception
+    raise Exception("No request with valid model found")
 
 def finalCardName(card_dict:dict) -> str:
     card_name = card_dict['name']
+    
     if card_dict['isUpRight'] == True:
         card_name += ' (Bài xuôi)'
     else:
         card_name += ' (Bài ngược)'
+        
     return card_name
 
 async def generatePrompt(data:dict) -> str:
