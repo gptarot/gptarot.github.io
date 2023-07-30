@@ -1,7 +1,7 @@
 # CLient: OpenAI GPT3.5-Turbo connecting with POE API
 
 async def GPTarot_request(client, prompt:str) -> str:
-    for result in client.send_message("chinchilla", prompt): # chinchilla is the name of the engine ChatGPT3.5-Turbo
+    for result in client.send_message("chinchilla", prompt, timeout = 50): # chinchilla is the name of the engine ChatGPT3.5-Turbo
         pass
     return result["text"]
 
