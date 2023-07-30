@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-import werkzeug, time, os
-from api.model import generatePrompt, openai
+import werkzeug, time
+from api.model import generatePrompt, openai, os, poe
 
 def create_app():
     app = Flask(__name__)

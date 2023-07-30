@@ -200,4 +200,4 @@ packages/react-devtools-timeline/dist
 .prettierrc
 .vercel
 
-_testing.py
+_testing*.py
