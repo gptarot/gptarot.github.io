@@ -1,5 +1,6 @@
 import openai, poe, os
 
+# Define a function to send request to POE
 async def POE_request(prompt:str) -> str:
     poe_client = poe.Client(os.environ.get('POE_TOKEN'))
     for chunk in poe_client.send_message("chinchilla", prompt, timeout=120):
@@ -7,6 +8,7 @@ async def POE_request(prompt:str) -> str:
     del poe_client
     return (chunk["text"])
 
+# Define a function to choose the valid model and send
 async def GPTarot_request(prompt:str) -> str:
     model_lists = [
         "gpt-3.5-turbo",
@@ -31,18 +33,18 @@ async def GPTarot_request(prompt:str) -> str:
             continue
         
     # If all models are invalid, raise an exception
-    raise Exception("No request with valid model found")
+    return 403
 
+# Define a function to get the final card name
 def finalCardName(card_dict:dict) -> str:
     card_name = card_dict['name']
-    
     if card_dict['isUpRight'] == True:
         card_name += ' (Bài xuôi)'
     else:
         card_name += ' (Bài ngược)'
-        
     return card_name
 
+# Define a function to generate prompt
 async def generatePrompt(data:dict) -> str:
     past_card = finalCardName(data['past-card'])
     present_card = finalCardName(data['present-card'])
