@@ -5,9 +5,11 @@ import { Link } from 'react-router-dom';
 
 const Random: React.FC = (): JSX.Element => {
   const [cardInfo, setCardInfo] = useState<CardInfo | null>(null);
+  const [random, setRandom] = useState<number | null>(null);
 
   const handleRandomCard = async (): Promise<void> => {
-    const response: CardInfo | undefined = await getRandomCard();
+    setRandom(Math.floor(Math.random() * 78) + 1);
+    const response: CardInfo | undefined = await getRandomCard(random);
 
     if (response) {
       setCardInfo(response);
