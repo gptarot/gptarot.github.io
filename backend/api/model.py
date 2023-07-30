@@ -1,7 +1,7 @@
 import openai
 
 async def GPTarot_request(prompt:str) -> str:
-    response = openai.ChatCompletion.create(model="gpt-3.5-turbo", messages=[{"role": "user", "content": prompt}])
+    response = await openai.ChatCompletion.create(model="gpt-3.5-turbo", messages=[{"role": "user", "content": prompt}])
     return str(response.choices[0].message.content)
 
 def finalCardName(card_dict:dict) -> str:
