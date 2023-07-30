@@ -56,7 +56,7 @@ const Random: React.FC = (): JSX.Element => {
               <p>{`Mythical/Spiritual: ${cardInfo['Mythical/Spiritual']}`}</p>
             </div>
             <img
-              src={`https://raw.githubusercontent.com/gptarot/gptarot.github.io/main/static/cards/${cardInfo.img}`}
+              src={`https://raw.githubusercontent.com/gptarot/gptarot.github.io/main/static/cards/${random}.jpg`}
               alt=""
             />
           </div>
