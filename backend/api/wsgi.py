@@ -1,4 +1,8 @@
-from api.index import app
+from api.index import create_app
+import uvicorn, os
+
+app = create_app()
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    cloud_port = os.environ.get('PORT', 5000)
+    uvicorn.run(app, host='0.0.0.0',port=cloud_port, debug=True)

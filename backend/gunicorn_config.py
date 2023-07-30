@@ -12,6 +12,3 @@ threads = 2
 # Server socket
 PORT = os.environ.get('PORT', 5000)
 bind = f'0.0.0.0:{PORT}'
-
-# Choose gevent worker type
-worker_class = 'gevent'

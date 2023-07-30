@@ -33,6 +33,9 @@ def create_app():
 
     return app
 
+
+####### EXAMPLE USAGE ON LOCALHOST (WIHOUT GUNICORN - NOT RECOMMENDED) #######
+
 app = create_app()
 
 if __name__ == '__main__':
