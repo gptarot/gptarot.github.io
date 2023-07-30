@@ -1,17 +1,8 @@
-ERROR_SCHEMA = {
-    'type': 'object',
-    'properties': {
-        'error': {'type': 'string'}
-    },
-    'required': ['error'],
-    'additionalProperties': False
-}
-
 REQUEST_SCHEMA = {
     'type': 'object',
     'properties': {
         'name': {'type': 'string', 'minLength': 1},
-        'dob': {'type': 'string', 'format': 'date'},
+        'dob': {'type': 'string', 'minLength': 1},
         'question': {'type': 'string', 'minLength': 1},
         'past-card': {
             'type': 'object',

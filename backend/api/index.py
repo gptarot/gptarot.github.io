@@ -2,7 +2,7 @@ from flask import Flask, jsonify, request
 from flask_expects_json import expects_json
 from flask_cors import CORS
 from api.model import generatePrompt, openai, os, poe
-from api.schema import REQUEST_SCHEMA, ERROR_SCHEMA
+from api.schema import REQUEST_SCHEMA
 import werkzeug, time
 
 # Create the Flask app
@@ -14,21 +14,26 @@ def create_app():
     # Handle bad requests
     @app.errorhandler(werkzeug.exceptions.BadRequest)
     def handle_bad_request(e):
-        validation_errors = request.expects_json_errors
-        error_messages = []
-        for field, errors in validation_errors.items():
-            for error in errors:
-                error_messages.append(f"Invalid value for '{field}': {error}")
-        return jsonify({'errors': error_messages}), 400
+        return jsonify({'error': 'Bad Request!', 'details' : str(e)}), 400
+    
+    # Handle internal server errors
+    @app.errorhandler(werkzeug.exceptions.InternalServerError)
+    def handle_internal_server_error(e):
+        return jsonify({'error': 'Internal Server Error!', 'details' : str(e)}), 500
+    
+    # Handle too many requests
+    @app.errorhandler(werkzeug.exceptions.TooManyRequests)
+    def handle_too_many_requests(e):
+        return jsonify({'error': 'Too Many Requests!', 'details' : str(e)}), 429
     
     # Handle requests to / route
     @app.route("/")
     async def home():
-        return jsonify({'data': 'Wrong route, please use /api'}), 404
+        return jsonify({'code': 404, 'data': '', 'processing_time': 0}), 404
     
     # Handle requests to /api route
     @app.route('/api', methods=['POST'])
-    @expects_json(REQUEST_SCHEMA, error_schema = ERROR_SCHEMA)
+    @expects_json(REQUEST_SCHEMA)
     async def api():
         try:
             data = request.json
@@ -43,7 +48,7 @@ def create_app():
             return jsonify({'code': 200, 'data': result, 'processing_time': time.time() - start}), 200
 
         except Exception as e:
-            return jsonify({'error': str(e)}), 500
+            return jsonify({'error': 'Internal Server Error!', 'details' : str(e)}), 500
 
     return app
 
