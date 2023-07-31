@@ -26,15 +26,10 @@ def create_app():
     def handle_too_many_requests(exception):
         return jsonify({'error': 'Too Many Requests', 'details' : str(exception)}), 429
     
-    # Catch root route
-    @app.route("/")
-    def root():
-        return jsonify({'error': 'Not found', 'details': 'The requested route / does not exist'}), 404
-    
-    # Catch-all route to handle all other routes
-    @app.route("/<path:path>")
-    def catch_all(path):
-        return jsonify({'error': 'Not found', 'details': f'The requested route /{path} does not exist'}), 404
+    # Handle not found errors
+    @app.errorhandler(werkzeug.exceptions.NotFound)
+    def handle_not_found(exception):
+        return jsonify({'error': 'Not Found', 'details' : str(exception)}), 404
     
     # Handle requests to /api route
     @app.route('/api', methods=['POST'])
@@ -45,15 +40,18 @@ def create_app():
             if not isinstance(data, dict):
                 return jsonify({'error': 'Invalid data type'}), 500
             start = time.time()
-            result = await generatePrompt(data)
+            result, model = await generatePrompt(data)
             # If all models are invalid, return 403
             if result == 403:
                 return jsonify({'error': 'All models are invalid'}), 403
             # If the result is valid, return it
-            return jsonify({'code': 200, 'data': result, 'processing_time': time.time() - start}), 200
+            return jsonify({'code': 200, 
+                            'data': result, 
+                            'processing_time': time.time() - start, 
+                            'model_used':model}), 200
 
-        except Exception:
-            return jsonify({'error': 'Internal Server Error', 'details' : str(Exception)}), 500
+        except Exception as e:
+            return jsonify({'error': 'Internal Server Error', 'details' : str(e)}), 500
 
     # Return the Flask app
     return app

@@ -11,7 +11,7 @@ Returns:
 """
 async def POE_request(prompt:str) -> str:
     poe_client = poe.Client(os.environ.get('POE_TOKEN'))
-    for chunk in poe_client.send_message("chinchilla", prompt, timeout=120):
+    for chunk in poe_client.send_message("capybara", prompt, timeout=120):
         pass
     del poe_client
     return (chunk["text"])
@@ -39,18 +39,18 @@ async def GPTarot_request(prompt:str) -> str:
         try:
             if model_lists.index(model) != 3:
                 response = openai.ChatCompletion.create(model=model, messages=[{"role": "user", "content": prompt}])
-                return str(response.choices[0].message.content)
+                return str(response.choices[0].message.content), model
             
             elif model_lists.index(model) == 3:
                 response = await POE_request(prompt)
-                return response
+                return response, model
     
         except Exception as e:
             print(e, "\n==> Switching from model {} to model {}".format(model, model_lists[model_lists.index(model) + 1]))
             continue
         
     # If all models are invalid, raise an exception
-    return 403
+    return 403, None
 
 
 """
@@ -87,5 +87,5 @@ async def generatePrompt(data:dict) -> str:
     act = 'Bạn hãy đóng vai trò là Tarot Reader. Tên tôi là {}, sinh ngày {}. '.format(data['name'], data['dob'])
     card_info = f'Giả sử tôi rút được 3 lá bài Tarot là: {past_card}, {present_card}, {future_card}. '
     prompt = act + card_info + f"Hãy trả lời câu hỏi của tôi: {data['question']}? Trả lời bằng giọng văn huyền bí và sâu sắc nhất có thể"
-    answer = await GPTarot_request(prompt)
-    return str(answer)
+    answer, model = await GPTarot_request(prompt)
+    return str(answer), model
