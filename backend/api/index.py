@@ -13,23 +13,28 @@ def create_app():
     
     # Handle bad requests
     @app.errorhandler(werkzeug.exceptions.BadRequest)
-    def handle_bad_request(e):
-        return jsonify({'error': 'Bad Request!', 'details' : str(e)}), 400
+    def handle_bad_request(exception):
+        return jsonify({'error': 'Bad Request', 'details' : str(exception)}), 400
     
     # Handle internal server errors
     @app.errorhandler(werkzeug.exceptions.InternalServerError)
-    def handle_internal_server_error(e):
-        return jsonify({'error': 'Internal Server Error!', 'details' : str(e)}), 500
+    def handle_internal_server_error(exception):
+        return jsonify({'error': 'Internal Server Error', 'details' : str(exception)}), 500
     
     # Handle too many requests
     @app.errorhandler(werkzeug.exceptions.TooManyRequests)
-    def handle_too_many_requests(e):
-        return jsonify({'error': 'Too Many Requests!', 'details' : str(e)}), 429
+    def handle_too_many_requests(exception):
+        return jsonify({'error': 'Too Many Requests', 'details' : str(exception)}), 429
     
-    # Handle requests to / route
+    # Catch root route
     @app.route("/")
-    async def home():
-        return jsonify({'code': 404, 'data': '', 'processing_time': 0}), 404
+    def root():
+        return jsonify({'error': 'Not found', 'details': 'The requested route / does not exist'}), 404
+    
+    # Catch-all route to handle all other routes
+    @app.route("/<path:path>")
+    def catch_all(path):
+        return jsonify({'error': 'Not found', 'details': f'The requested route /{path} does not exist'}), 404
     
     # Handle requests to /api route
     @app.route('/api', methods=['POST'])
@@ -47,8 +52,8 @@ def create_app():
             # If the result is valid, return it
             return jsonify({'code': 200, 'data': result, 'processing_time': time.time() - start}), 200
 
-        except Exception as e:
-            return jsonify({'error': 'Internal Server Error!', 'details' : str(e)}), 500
+        except Exception:
+            return jsonify({'error': 'Internal Server Error', 'details' : str(Exception)}), 500
 
     # Return the Flask app
     return app
