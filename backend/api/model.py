@@ -1,4 +1,5 @@
 import openai
+import os
 
 async def GPTarot_request(prompt:str) -> str:
     """
@@ -23,7 +24,8 @@ async def GPTarot_request(prompt:str) -> str:
             return str(response.choices[0].message.content), model
     
         except Exception as e:
-            print(e, "\n==> Switching from model {} to model {}".format(model, model_lists[model_lists.index(model) + 1]))
+            os.system(f'echo {str(e)}')
+            os.system(f'echo "==> Switching model: {model} -> {model_lists[model_lists.index(model) + 1]}"')
             continue
         
     # If all models are invalid, raise an exception
