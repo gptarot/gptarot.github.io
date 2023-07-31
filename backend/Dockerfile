@@ -1,4 +1,4 @@
-FROM python:3.10.6-slim-buster
+FROM python:3.10-slim
 
 # Setup working environment
 WORKDIR /home
@@ -10,10 +10,10 @@ RUN chmod +x /home/commands.sh
 
 # Clean up unnecessary files and folders to reduce the image size
 RUN echo "==> Clean up unnecessary files..."
-RUN apt-get autoremove \
-    && apt-get clean \
-    && apt-get autoclean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /home/requirements.txt /home/Dockerfile
+RUN apt-get update && \
+    apt-get autoremove -y && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /home/requirements.txt /home/Dockerfile
 
 # Print out the success message
 RUN echo "==> Successfully built the image."
