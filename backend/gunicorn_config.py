@@ -4,6 +4,9 @@ import os
 
 # Gunicorn config variables
 workers = 5
+worker_class = 'gevent'
+preload_app = True
+worker_connections = 1000
 max_requests = 1000
 timeout = 120
 backlog = 2048
