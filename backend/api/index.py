@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request
 from flask_expects_json import expects_json
 from flask_cors import CORS
-from api.model import generatePrompt, openai, os, poe
+from api.model import generatePrompt, openai, os
 from api.schema import REQUEST_SCHEMA
 import werkzeug, time
 
